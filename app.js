@@ -7,18 +7,12 @@ const logger = require('morgan');
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const book = require('./routes/book')
+const movie = require('./routes/movie')
 const app = express();
-const mongoose = require('mongoose')
-mongoose.connect('mongodb://localhost/NodeProject', {useNewUrlParser: true, useUnifiedTopology: true})
 
-mongoose.connection.on('open', () => {
-console.log('MongoDb Connected Successfully')
-})
+//db Connection
 
-mongoose.connection.on('error', (err) => {
-    console.log('MongoDb Connection Error',err)
-})
-
+const db = require('./helper/db')()
 
 const profile = require('./routes/profile');
 
@@ -35,7 +29,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/profile', profile);
-app.use('/book',book)
+app.use('/book',book);
+app.use('/api/movie',movie);
+
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
     next(createError(404));
