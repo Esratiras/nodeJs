@@ -1,6 +1,7 @@
 const mongoose = require('mongoose')
+const {mongo} = require("mongoose");
 
-module.exports = ()=>{
+module.exports = () => {
     mongoose.connect('mongodb://localhost/NodeProject', {useNewUrlParser: true, useUnifiedTopology: true})
 
     mongoose.connection.on('open', () => {
@@ -8,8 +9,8 @@ module.exports = ()=>{
     })
 
     mongoose.connection.on('error', (err) => {
-        console.log('MongoDb Connection Error',err)
+        console.log('MongoDb Connection Error', err)
     })
-
+    mongoose.Promise = global.Promise
 }
 
